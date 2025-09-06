@@ -31,12 +31,10 @@ class Configuration implements Contract\Command\ConfigurationReceiver
         $command->populateConfiguration($this);
     }
 
-    public function invoke(
-        Contract\Invocation $invocation,
-        Contract\Stream\StreamProvider $streamCollection
-    ): int|false
+    public function invoke(Contract\Terminal $terminal): int|false
     {
-        if ($invocation->getArgument(0) !== $this->name) {
+        $arguments = $terminal->arguments;
+        if ($arguments[0] !== $this->name) {
             return false;
         }
 
@@ -52,7 +50,7 @@ class Configuration implements Contract\Command\ConfigurationReceiver
         $activeOption = null;
         $leftoverArguments = [];
         $forceAppend = false;
-        foreach ($invocation->allArguments() as $index => $argument) {
+        foreach ($arguments as $index => $argument) {
             if ($index === 0)
                 continue;
             if ($forceAppend) {
@@ -161,7 +159,7 @@ class Configuration implements Contract\Command\ConfigurationReceiver
 
         $this->leftoversParser?->parse(Subject::default($leftoverArguments, 'CLI Arguments'));
 
-        return $this->command->invoke($invocation, $streamCollection);
+        return $this->command->invoke($terminal);
     }
 
     public function setName(string $name): Contract\Command\ConfigurationReceiver

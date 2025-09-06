@@ -7,7 +7,7 @@ use Philiagus\Figment\Cli\Contract\Stream\StreamProvider;
 
 interface Command {
 
-    public function invoke(Invocation $invocation, StreamProvider $streams): int;
+    public function invoke(Terminal $terminal): int;
 
     public function populateConfiguration(Command\ConfigurationReceiver $configuration): void;
 
