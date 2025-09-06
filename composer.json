@@ -1,0 +1,37 @@
+{
+  "name": "philiagus/figment-cli",
+  "description": "PHP Figment Framework: CLI processing",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "php",
+    "figment",
+    "cli"
+  ],
+  "authors": [
+    {
+      "name": "Andreas Eicher",
+      "email": "philiagus@philiagus.de",
+      "role": "lead"
+    }
+  ],
+  "require": {
+    "php": ">=8.4",
+    "philiagus/parser": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*",
+    "phpspec/prophecy-phpunit": "*",
+    "ext-xdebug": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Philiagus\\Figment\\Cli\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Philiagus\\Figment\\Cli\\Test\\": "tests/"
+    }
+  }
+}
