@@ -20,7 +20,7 @@ class TerminalArguments implements Contract\TerminalArguments
     public function get(int $number): string
     {
         return $this->arguments[$number] ??
-            throw new \OutOfBoundsException("Offset $number does not exist");
+            throw new \OutOfBoundsException("Terminal argument $number does not exist");
     }
 
     public function has(int $number): bool

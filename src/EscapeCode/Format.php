@@ -15,6 +15,7 @@ enum Format: string implements Contract\Stream\EscapeCode
     case FRAMED = "51";
     case ENCIRCLED = "52";
     case OVERLINED = "53";
+    case RESET = "0";
 
     public function code(): string
     {

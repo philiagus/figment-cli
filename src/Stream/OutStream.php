@@ -66,6 +66,21 @@ class OutStream implements Contract\Stream\OutStream
         return $this;
     }
 
+    public function out(string|EscapeCode ...$output): Contract\Stream\OutStream
+    {
+        $collectedCodes = [];
+        foreach($output as $line) {
+            if($line instanceof EscapeCode) {
+                $collectedCodes[] = $line;
+                continue;
+            }
+            $this->print($line, ...$collectedCodes);
+            $collectedCodes = [];
+        }
+
+        return $this;
+    }
+
     public function println(string $content, EscapeCode ...$escapeCodes): Contract\Stream\OutStream
     {
         return $this->print($content, ...$escapeCodes)->ln();

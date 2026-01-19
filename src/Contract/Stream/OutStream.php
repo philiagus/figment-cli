@@ -18,6 +18,8 @@ interface OutStream
 
     public function deactivateAllEscapeCodes(): self;
 
+    public function out(string|EscapeCode ...$output): self;
+
     public function raw(string $string): self;
 
 }

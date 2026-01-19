@@ -34,7 +34,7 @@ class Configuration implements Contract\Command\ConfigurationReceiver
     public function invoke(Contract\Terminal $terminal): int|false
     {
         $arguments = $terminal->arguments;
-        if ($arguments[0] !== $this->name) {
+        if (($arguments[0] ?? '') !== $this->name) {
             return false;
         }
 
@@ -197,5 +197,13 @@ class Configuration implements Contract\Command\ConfigurationReceiver
         $this->leftoversParser = $parser;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

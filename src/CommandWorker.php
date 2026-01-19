@@ -11,21 +11,34 @@ use Philiagus\Figment\Container\EmptyInstanceList;
 
 readonly class CommandWorker {
 
+    /**
+     * @param InstanceList $commands
+     */
     public function __construct(
         #[Instance('figment.cli.commands', new EmptyInstanceList())] private InstanceList $commands
     ) {}
 
     public function work(Contract\Terminal $terminal): int
     {
+        $commands = [];
+        $commandConfigurations = [];
         try {
             foreach ($this->commands->traverseInstances(Command::class) as $command) {
-                $result = new Configuration($command)->invoke($terminal);
-                if ($result !== null) {
+                $commands[] = $command;
+                $config = new Configuration($command);
+                $commandConfigurations[] = $config;
+                $result = $config->invoke($terminal);
+                if($result !== false) {
                     return $result;
                 }
             }
         } catch (\Throwable $e) {
             $terminal->stderr()->print((string)$e);
+        }
+
+        foreach($commandConfigurations as $configuration) {
+            $terminal->stdout()->println($configuration->getName());
+            return 255;
         }
 
         throw new \OutOfBoundsException("No command found");
