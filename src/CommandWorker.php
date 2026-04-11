@@ -23,11 +23,9 @@ readonly class CommandWorker
 
     public function work(Contract\Terminal $terminal): int
     {
-        $commands = [];
         $commandConfigurations = [];
         try {
             foreach ($this->commands->traverseInstances(Command::class) as $command) {
-                $commands[] = $command;
                 $config = new Configuration($command);
                 $commandConfigurations[] = $config;
                 $result = $config->invoke($terminal);
@@ -36,11 +34,11 @@ readonly class CommandWorker
                 }
             }
         } catch (\Throwable $e) {
-            $terminal->stderr()->print((string) $e);
+            $terminal->stderr->print((string) $e);
         }
 
         foreach ($commandConfigurations as $configuration) {
-            $terminal->stdout()->println($configuration->getName());
+            $terminal->stdout->println($configuration->getName());
 
             return 255;
         }

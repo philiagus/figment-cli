@@ -9,19 +9,16 @@ use Philiagus\Figment\Cli\Contract\Stream\OutStream;
 interface Terminal
 {
 
-    public TerminalArguments $arguments {
-        get;
-    }
+    public InStream $stdin {get;}
+    public OutStream $stdout {get;}
+    public OutStream $stderr {get;}
 
-    public function phpBinary(): \SplFileInfo;
+    public \SplFileInfo $phpBinary {get;}
+    public \SplFileInfo $scriptFile {get;}
 
-    public function scriptFile(): \SplFileInfo;
+    public TerminalArguments $arguments {get;}
+
     public function inStream(int $number): InStream;
 
     public function outStream(int $number): OutStream;
-
-    public function stdin(): InStream;
-
-    public function stdout(): OutStream;
-    public function stderr(): OutStream;
 }
